@@ -1,36 +1,49 @@
+<?php
+require_once 'php/auth.php';
+$user = currentUser();
+?>
 <!DOCTYPE html>
 <html lang="ro">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SoundWave</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="CSS/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoundWave — Platforma ta muzicală</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 </head>
-
 <body>
 
-  <!-- ── NAVBAR ── -->
-  <nav class="navbar">
-    <div class="logo">SoundWave</div>
-
-    <ul class="nav-links">
-      <li><a href="#" class="active">Acasă</a></li>
-      <li><a href="#">Descoperă</a></li>
-      <li><a href="#">Funcționalități</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-
-    <div class="nav-actions">
-      <button class="btn btn-ghost">Conectare</button>
-      <button class="btn btn-primary">Înregistrare</button>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.php" class="logo">SoundWave</a>
+  <ul class="nav-links">
+    <li><a href="index.php" class="active" data-i18n="home">Acasă</a></li>
+    <li><a href="index.php#discover" data-i18n="discover">Descoperă</a></li>
+    <?php if ($user): ?>
+    <li><a href="dashboard.php" data-i18n="dashboard">Panou</a></li>
+    <?php endif; ?>
+    <li><a href="contact.php" data-i18n="contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="ro" onclick="switchLang('ro')">RO</button>
+      <button class="lang-btn" data-lang="en" onclick="switchLang('en')">EN</button>
+      <button class="lang-btn" data-lang="ru" onclick="switchLang('ru')">RU</button>
     </div>
-  </nav>
+    <button class="btn-icon" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">
+      <i class="ti ti-moon"></i>
+    </button>
+    <?php if ($user): ?>
+      <span style="font-size:.85rem;color:var(--text2);padding:0 .5rem"><?= htmlspecialchars($user['name']) ?></span>
+      <a href="logout.php" class="btn btn-ghost" data-i18n="logout">Deconectare</a>
+    <?php else: ?>
+      <a href="login.php" class="btn btn-ghost" data-i18n="login">Conectare</a>
+      <a href="register.php" class="btn btn-primary" data-i18n="register">Înregistrare</a>
+    <?php endif; ?>
+  </div>
+</nav>
 
+<div class="page-wrapper">
   <!-- ── PAGE ── -->
   <div class="page">
 
